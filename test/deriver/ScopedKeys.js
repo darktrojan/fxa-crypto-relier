@@ -70,6 +70,21 @@ describe('ScopedKeys', function () {
       });
   });
 
+  it('should correctly derive Thunderbird sync key to known test vectors', () => {
+    return scopedKeys.deriveScopedKey({
+      inputKey: 'eaf9570b7219a4187d3d6bf3cec2770c2e0719b7cc0dfbb38243d6f1881675e9',
+      keyRotationSecret: '0000000000000000000000000000000000000000000000000000000000000000',
+      keyRotationTimestamp: 1715043913541,
+      identifier: 'https://identity.thunderbird.net/apps/sync',
+      uid: uid
+    })
+      .then((key) => {
+        assert.equal(key.kty, 'oct');
+        assert.equal(key.k, 'DW_ll5GwX6SJ5GPqJVAuMUP2t6kDqhUulc2cbt26xbTcaKGQl-9l29FHAQ7kUiJETma4s9fIpEHrt909zgFang');
+        assert.equal(key.kid, '1715043913541-IqQv4onc7VcVE1kTQkyyOw');
+      });
+  });
+
   it('validates that inputKey is provided', () => {
     return scopedKeys.deriveScopedKey({
       keyRotationSecret: keyRotationSecret,

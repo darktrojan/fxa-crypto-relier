@@ -7,7 +7,10 @@ const base64url = require('base64url');
 const jose = require('node-jose');
 
 const KEY_LENGTH = 48;
-const LEGACY_SYNC_SCOPE = 'https://identity.mozilla.com/apps/oldsync';
+const SYNC_SCOPES = [
+  'https://identity.mozilla.com/apps/oldsync',
+  'https://identity.thunderbird.net/apps/sync',
+];
 const REGEX_HEX32 = /^[0-9a-f]{32}$/i;
 const REGEX_HEX64 = /^[0-9a-f]{64}$/i;
 const REGEX_TIMESTAMP = /^[0-9]{13}$/;
@@ -72,7 +75,7 @@ class ScopedKeys {
         throw new Error('uid must be a 32-character hex string');
       }
 
-      if (options.identifier === LEGACY_SYNC_SCOPE) {
+      if (SYNC_SCOPES.includes(options.identifier)) {
         return resolve(this._deriveLegacySyncKey(options));
       }
 
@@ -126,7 +129,7 @@ class ScopedKeys {
       const inputKeyBuf = Buffer.from(options.inputKey, 'hex');
       const scopedKey = {
         kty: 'oct',
-        scope: LEGACY_SYNC_SCOPE
+        scope: options.identifier
       };
 
       return resolve(this._deriveHKDF(null, inputKeyBuf, contextBuf, 64)

@@ -67924,7 +67924,7 @@ var base64url = __webpack_require__(60);
 var jose = __webpack_require__(49);
 
 var KEY_LENGTH = 48;
-var LEGACY_SYNC_SCOPE = 'https://identity.mozilla.com/apps/oldsync';
+var SYNC_SCOPES = ['https://identity.mozilla.com/apps/oldsync', 'https://identity.thunderbird.net/apps/sync'];
 var REGEX_HEX32 = /^[0-9a-f]{32}$/i;
 var REGEX_HEX64 = /^[0-9a-f]{64}$/i;
 var REGEX_TIMESTAMP = /^[0-9]{13}$/;
@@ -67999,7 +67999,7 @@ var ScopedKeys = function () {
           throw new Error('uid must be a 32-character hex string');
         }
 
-        if (options.identifier === LEGACY_SYNC_SCOPE) {
+        if (SYNC_SCOPES.includes(options.identifier)) {
           return resolve(_this._deriveLegacySyncKey(options));
         }
 
@@ -68054,7 +68054,7 @@ var ScopedKeys = function () {
         var inputKeyBuf = Buffer.from(options.inputKey, 'hex');
         var scopedKey = {
           kty: 'oct',
-          scope: LEGACY_SYNC_SCOPE
+          scope: options.identifier
         };
 
         return resolve(_this2._deriveHKDF(null, inputKeyBuf, contextBuf, 64).then(function (key) {
@@ -70632,7 +70632,7 @@ module.exports.makeKey = makeKey
 /* 248 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"elliptic","version":"6.4.0","description":"EC cryptography","main":"lib/elliptic.js","files":["lib"],"scripts":{"jscs":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","jshint":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","lint":"npm run jscs && npm run jshint","unit":"istanbul test _mocha --reporter=spec test/index.js","test":"npm run lint && npm run unit","version":"grunt dist && git add dist/"},"repository":{"type":"git","url":"git@github.com:indutny/elliptic"},"keywords":["EC","Elliptic","curve","Cryptography"],"author":"Fedor Indutny <fedor@indutny.com>","license":"MIT","bugs":{"url":"https://github.com/indutny/elliptic/issues"},"homepage":"https://github.com/indutny/elliptic","devDependencies":{"brfs":"^1.4.3","coveralls":"^2.11.3","grunt":"^0.4.5","grunt-browserify":"^5.0.0","grunt-cli":"^1.2.0","grunt-contrib-connect":"^1.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^1.0.1","grunt-mocha-istanbul":"^3.0.1","grunt-saucelabs":"^8.6.2","istanbul":"^0.4.2","jscs":"^2.9.0","jshint":"^2.6.0","mocha":"^2.1.0"},"dependencies":{"bn.js":"^4.4.0","brorand":"^1.0.1","hash.js":"^1.0.0","hmac-drbg":"^1.0.0","inherits":"^2.0.1","minimalistic-assert":"^1.0.0","minimalistic-crypto-utils":"^1.0.0"},"_resolved":"https://registry.npmjs.org/elliptic/-/elliptic-6.4.0.tgz","_integrity":"sha1-ysmvh2LIWDYYcAPI3+GT5eLq5d8=","_from":"elliptic@6.4.0"}
+module.exports = {"name":"elliptic","version":"6.4.0","description":"EC cryptography","main":"lib/elliptic.js","files":["lib"],"scripts":{"jscs":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","jshint":"jscs benchmarks/*.js lib/*.js lib/**/*.js lib/**/**/*.js test/index.js","lint":"npm run jscs && npm run jshint","unit":"istanbul test _mocha --reporter=spec test/index.js","test":"npm run lint && npm run unit","version":"grunt dist && git add dist/"},"repository":{"type":"git","url":"git@github.com:indutny/elliptic"},"keywords":["EC","Elliptic","curve","Cryptography"],"author":"Fedor Indutny <fedor@indutny.com>","license":"MIT","bugs":{"url":"https://github.com/indutny/elliptic/issues"},"homepage":"https://github.com/indutny/elliptic","devDependencies":{"brfs":"^1.4.3","coveralls":"^2.11.3","grunt":"^0.4.5","grunt-browserify":"^5.0.0","grunt-cli":"^1.2.0","grunt-contrib-connect":"^1.0.0","grunt-contrib-copy":"^1.0.0","grunt-contrib-uglify":"^1.0.1","grunt-mocha-istanbul":"^3.0.1","grunt-saucelabs":"^8.6.2","istanbul":"^0.4.2","jscs":"^2.9.0","jshint":"^2.6.0","mocha":"^2.1.0"},"dependencies":{"bn.js":"^4.4.0","brorand":"^1.0.1","hash.js":"^1.0.0","hmac-drbg":"^1.0.0","inherits":"^2.0.1","minimalistic-assert":"^1.0.0","minimalistic-crypto-utils":"^1.0.0"}}
 
 /***/ }),
 /* 249 */
